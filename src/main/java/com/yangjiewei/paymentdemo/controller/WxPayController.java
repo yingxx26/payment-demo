@@ -32,13 +32,13 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/api/wx-pay")
 public class WxPayController {
 
-    @Resource
+   /* @Resource
     private WxPayService wxPayService;
 
     @Resource
     private Verifier verifier;
 
-    /**
+    *//**
      * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_4_1.shtml
      * native下单api
      * 根据商品信息获取费用信息等，这里没有实际获取商品，调用接口获取code_url，前端显示二维码
@@ -50,7 +50,7 @@ public class WxPayController {
      *     "orderNo": "ORDER_20220824172547251"
      *   }
      * }
-     */
+     *//*
     @ApiOperation("调用统一下单API，生成支付二维码")
     @PostMapping("/native/{productId}")
     public R nativePay(@PathVariable Long productId) throws Exception {
@@ -61,7 +61,7 @@ public class WxPayController {
     }
 
 
-    /**
+    *//**
      * 支付通知
      * 微信支付通过支付通知接口将用户支付成功消息通知给商户
      * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_4_5.shtml
@@ -75,7 +75,7 @@ public class WxPayController {
      * 微信发送过来的通知可能因为网络不稳定而出现网络超时，5S
      * 如果微信未能成功获取我们的响应，就会重复发送支付通知
      *
-     */
+     *//*
     @ApiOperation("支付通知")
     @PostMapping("/native/notify")
     public String nativeNotify(HttpServletRequest request, HttpServletResponse response) {
@@ -123,10 +123,10 @@ public class WxPayController {
 
     }
 
-    /**
+    *//**
      * 用户取消订单
      * @return
-     */
+     *//*
     @ApiOperation("取消订单")
     @PostMapping("/cancel/{orderNo}")
     public R cancel(@PathVariable String orderNo) throws IOException {
@@ -135,7 +135,7 @@ public class WxPayController {
         return R.ok().setMessage("订单已取消");
     }
 
-    /**
+    *//**
      * 微信支付查单API
      * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_2.shtml
      * 商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。查询订单状态可通过微信支付订单号或商户订单号两种方式查询
@@ -147,7 +147,7 @@ public class WxPayController {
      *     "bodyAsString": "{\"amount\":{\"currency\":\"CNY\",\"payer_currency\":\"CNY\",\"payer_total\":1,\"total\":1},\"appid\":\"wx74862e0dfcf69954\",\"attach\":\"\",\"bank_type\":\"OTHERS\",\"mchid\":\"1558950191\",\"out_trade_no\":\"ORDER_20220828172344338\",\"payer\":{\"openid\":\"oHwsHuCgDFPyqFo2Sawg6yA0Pu4A\"},\"promotion_detail\":[],\"success_time\":\"2022-08-28T17:23:59+08:00\",\"trade_state\":\"SUCCESS\",\"trade_state_desc\":\"支付成功\",\"trade_type\":\"NATIVE\",\"transaction_id\":\"4200001550202208284738686219\"}"
      *   }
      * }
-     */
+     *//*
     @ApiOperation("查询订单：测试订单状态用")
     @GetMapping("/query/{orderNo}")
     public R queryOrder(@PathVariable String orderNo) throws IOException {
@@ -156,10 +156,10 @@ public class WxPayController {
         return R.ok().setMessage("查询成功").data("bodyAsString", bodyAsString);
     }
 
-    /**
+    *//**
      * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_4_9.shtml
      * @return
-     */
+     *//*
     @ApiOperation("申请退款")
     @PostMapping("/refunds/{orderNo}/{reason}")
     public R refunds(@PathVariable String orderNo,
@@ -170,7 +170,7 @@ public class WxPayController {
         return R.ok();
     }
 
-    /**
+    *//**
      * 查询退款情况
      * @param refundNo 退款编号，商户内部生成
      * @return
@@ -181,7 +181,7 @@ public class WxPayController {
      *     "result": "{\"amount\":{\"currency\":\"CNY\",\"discount_refund\":0,\"from\":[],\"payer_refund\":1,\"payer_total\":1,\"refund\":1,\"settlement_refund\":1,\"settlement_total\":1,\"total\":1},\"channel\":\"ORIGINAL\",\"create_time\":\"2022-08-31T15:50:34+08:00\",\"funds_account\":\"AVAILABLE\",\"out_refund_no\":\"REFUND_20220831155032315\",\"out_trade_no\":\"ORDER_20220828172344338\",\"promotion_detail\":[],\"refund_id\":\"50302003012022083124382080035\",\"status\":\"SUCCESS\",\"success_time\":\"2022-08-31T15:50:41+08:00\",\"transaction_id\":\"4200001550202208284738686219\",\"user_received_account\":\"支付用户零钱\"}"
      *   }
      * }
-     */
+     *//*
     @ApiOperation("查询退款：测试用")
     @GetMapping("/query-refund/{refundNo}")
     public R queryRefund(@PathVariable String refundNo) throws IOException {
@@ -190,14 +190,14 @@ public class WxPayController {
         return R.ok().setMessage("查询成功").data("result", result);
     }
 
-    /**
+    *//**
      * 退款结果通知
      * 退款状态改变后，微信会把相关的退款结果发送给用户
      * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_4_11.shtml
      * @param request
      * @param response
      * @return
-     */
+     *//*
     @PostMapping("/refunds/notify")
     public String refundsNotify(HttpServletRequest request, HttpServletResponse response) {
 
@@ -244,7 +244,7 @@ public class WxPayController {
     }
 
 
-    /**
+    *//**
      * 获取交易账单URL
      * 微信支付按天提供交易账单文件，服务商可以通过该接口获取账单文件的下载地址。
      * 文件内包含交易相关的金额、时间、营销等信息，供商户核对订单、退款、银行到账等情况。
@@ -252,7 +252,7 @@ public class WxPayController {
      * @param type
      * @return
      * @throws Exception
-     */
+     *//*
     @ApiOperation("获取账单url：测试用")
     @GetMapping("/querybill/{billDate}/{type}")
     public R queryTradeBill(
@@ -264,7 +264,7 @@ public class WxPayController {
     }
 
 
-    /**
+    *//**
      * 下载账单API为通用接口，交易/资金账单都可以通过该接口获取到对应的账单。
      * 账单文件的下载地址的有效时间为30s
      * 这个微信接口响应信息头不包含微信接口响应的签名值，因此需要跳过验签的流程，所以需要我们在获取下载地址的时候对url进行hash比较，但是都对响应验签了，还有必要吗
@@ -273,7 +273,7 @@ public class WxPayController {
      * @param type
      * @return
      * @throws Exception
-     */
+     *//*
     @ApiOperation("下载账单")
     @GetMapping("/downloadbill/{billDate}/{type}")
     public R downloadBill(
@@ -282,6 +282,6 @@ public class WxPayController {
         log.info("下载账单");
         String result = wxPayService.downloadBill(billDate, type);
         return R.ok().data("result", result);
-    }
+    }*/
 
 }

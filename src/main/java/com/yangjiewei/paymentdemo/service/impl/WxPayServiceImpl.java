@@ -45,10 +45,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @Service
 @Slf4j
 public class WxPayServiceImpl implements WxPayService {
-
-    /**
-     * 获取微信支付的配置信息
-     */
+ /*
     @Resource
     private WxPayConfig wxPayConfig;
 
@@ -61,21 +58,21 @@ public class WxPayServiceImpl implements WxPayService {
     @Resource
     private RefundInfoService refundInfoService;
 
-    /**
+    *//**
      * 获取微信支付的httpClient，可以签名验签
-     */
+     *//*
     @Resource
     private CloseableHttpClient wxPayClient;
 
-    /**
+    *//**
      * 获取微信支付的httpClient，不对响应进行验签
-     */
+     *//*
     @Resource
     private CloseableHttpClient wxPayNoSignClient;
 
     private final ReentrantLock lock = new ReentrantLock();
 
-    /**
+    *//**
      * 开发指引：https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_7_2.shtml
      * 接口文档：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_4_1.shtml
      * requestJson
@@ -100,7 +97,7 @@ public class WxPayServiceImpl implements WxPayService {
      *     "orderNo": "ORDER_20220825104830065"
      *   }
      * }
-     */
+     *//*
     @Override
     public Map<String, Object> nativePay(Long productId) throws Exception {
         log.info("1.生成订单");
@@ -187,11 +184,11 @@ public class WxPayServiceImpl implements WxPayService {
         }
     }
 
-    /**
+    *//**
      * 处理订单
      * @param bodyMap 支付通知参数
      * @throws GeneralSecurityException
-     */
+     *//*
     @Override
     public void processOrder(Map<String, Object> bodyMap) throws GeneralSecurityException {
         log.info("处理订单");
@@ -204,10 +201,10 @@ public class WxPayServiceImpl implements WxPayService {
         Map<String, Object> plainTextMap = gson.fromJson(plainText, HashMap.class);
         String orderNo = (String) plainTextMap.get("out_trade_no");
 
-        /**
+        *//**
          * 在对业务数据进行状态检查和处理之前，这里要使用数据锁进行并发控制，以避免函数重入导致的数据混乱
          * 尝试获取锁成功之后才去处理数据，相比于同步锁，这里不会去等待，获取不到则直接返回
-         */
+         *//*
         if (lock.tryLock()) {
             try {
                 // 处理重复通知 出于接口幂等性考虑（无论接口被调用多少次，产生的结果都是一致的）
@@ -216,13 +213,13 @@ public class WxPayServiceImpl implements WxPayService {
                     return ;
                 }
 
-/*                // 模拟通知并发 try catch快捷键是 ctrl+wins+alt+t
+*//*                // 模拟通知并发 try catch快捷键是 ctrl+wins+alt+t
                 // 虽然前面处理了重复通知，但是这里是并发导致，这里要使用数据锁进行并发控制，以避免函数重入导致的数据混乱
                 try {
                     TimeUnit.SECONDS.sleep(5);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }*/
+                }*//*
 
                 // 3.更新订单状态
                 orderInfoService.updateStatusByOrderNo(orderNo, OrderStatus.SUCCESS);
@@ -237,9 +234,9 @@ public class WxPayServiceImpl implements WxPayService {
 
     }
 
-    /**
+    *//**
      * 用户取消订单
-     */
+     *//*
     @Override
     public void cancelOrder(String orderNo) throws IOException {
         // 调用微信支付的关单接口
@@ -248,11 +245,11 @@ public class WxPayServiceImpl implements WxPayService {
         orderInfoService.updateStatusByOrderNo(orderNo, OrderStatus.CANCEL);
     }
 
-    /**
+    *//**
      * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_2.shtml
      * 文档上的path方法是指在url上的值，query则是参数
      * 查询订单调用
-     */
+     *//*
     @Override
     public String queryOrder(String orderNo) throws IOException {
         log.info("查单接口调用：{}", orderNo);
@@ -283,12 +280,12 @@ public class WxPayServiceImpl implements WxPayService {
         }
     }
 
-    /**
+    *//**
      * 根据订单号查询微信支付查单接口，核实订单状态
      * 如果订单已支付，则更新商户端订单状态，并记录支付日志
      * 如果订单未支付，则调用关单接口关闭订单，并更新商户端订单状态
      * @param orderNo
-     */
+     *//*
     @Override
     public void checkOrderStatus(String orderNo) throws IOException {
         log.warn("根据订单号核实订单状态 orderNo:{}", orderNo);
@@ -321,11 +318,11 @@ public class WxPayServiceImpl implements WxPayService {
 
     }
 
-    /**
+    *//**
      * 申请退款，这个接口和文档不一样了，不知道能不能行呢
      * @param orderNo
      * @param reason
-     */
+     *//*
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void refund(String orderNo, String reason) throws IOException {
@@ -386,11 +383,11 @@ public class WxPayServiceImpl implements WxPayService {
         }
     }
 
-    /**
+    *//**
      * 查询退款使用
      * @param refundNo
      * @return
-     */
+     *//*
     @Override
     public String queryRefund(String refundNo) throws IOException {
         log.info("查询退款...");
@@ -415,10 +412,10 @@ public class WxPayServiceImpl implements WxPayService {
         }
     }
 
-    /**
+    *//**
      * 核实订单状态：调用微信支付查询退款接口
      * @param refundNo
-     */
+     *//*
     @Override
     public void checkRefundStatus(String refundNo) throws IOException {
         // 1.查询退款订单
@@ -482,9 +479,9 @@ public class WxPayServiceImpl implements WxPayService {
         }
     }
 
-    /**
+    *//**
      * 获取交易账单URL
-     */
+     *//*
     @Override
     public String queryBill(String billDate, String type) throws IOException {
         // 1.日志记录
@@ -553,12 +550,12 @@ public class WxPayServiceImpl implements WxPayService {
         }
     }
 
-    /**
+    *//**
      * native下单V2
      * @param productId
      * @param remoteAddr
      * @return
-     */
+     *//*
     @Override
     public Map<String, Object> nativePayV2(Long productId, String remoteAddr) throws Exception {
         // 1.记录日志
@@ -627,14 +624,14 @@ public class WxPayServiceImpl implements WxPayService {
         return map;
     }
 
-    /**
+    *//**
      * 关单接口调用
      * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_3.shtml
      * 以下情况需要调用关单接口：
      *    1、商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；
      *    2、系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。
      * @param orderNo
-     */
+     *//*
     private void closeOrder(String orderNo) throws IOException {
         log.info("关单接口的调用，订单号：{}", orderNo);
         // 创建远程请求对象
@@ -677,11 +674,11 @@ public class WxPayServiceImpl implements WxPayService {
         }
     }
 
-    /**
+    *//**
      * 对称解密
      * 为了保证安全性，微信支付在回调通知和平台证书下载接口中，对关键信息进行了AES-256-GCM加密。
      * 证书和回调报文使用的加密密钥为APIv3密钥，32字节 https://wechatpay-api.gitbook.io/wechatpay-api-v3/ren-zheng/api-v3-mi-yao
-     */
+     *//*
     private String decryptFromResource(Map<String, Object> bodyMap) throws GeneralSecurityException {
         log.info("密文解密");
         // 获取通知数据中的resource，这部分有加密数据
@@ -706,5 +703,5 @@ public class WxPayServiceImpl implements WxPayService {
 
         log.info("明文：{}", plainText);
         return plainText;
-    }
+    }*/
 }

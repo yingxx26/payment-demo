@@ -24,7 +24,7 @@ import java.util.List;
 @Component
 public class WxPayTask {
 
-    @Resource
+   /* @Resource
     private OrderInfoService orderInfoService;
 
     @Resource
@@ -33,7 +33,7 @@ public class WxPayTask {
     @Resource
     private RefundInfoService refundInfoService;
 
-    /**
+    *//**
      * 测试
      * (cron="秒 分 时 日 月 周")
      * *：每隔一秒执行
@@ -41,16 +41,16 @@ public class WxPayTask {
      * 1-3: 从第1秒开始执行，到第3秒结束执行
      * 1,2,3：第1、2、3秒执行
      * ?：不指定，若指定日期，则不指定周，反之同理
-     */
+     *//*
     //@Scheduled(cron="0/3 * * * * ?")
     public void testTask() {
         log.info("测试定时任务执行");
     }
 
-    /**
+    *//**
      * 定时查找超时订单
      * 从第0秒开始每隔30秒执行1次，查询创建超过5分钟，并且未支付的订单
-     */
+     *//*
     //@Scheduled(cron = "0/30 * * * * ?")
     public void orderConfirm() throws Exception {
         log.info("orderConfirm执行，定时查找超时订单...");
@@ -63,9 +63,9 @@ public class WxPayTask {
         }
     }
 
-    /**
+    *//**
      * 从第0秒开始每隔30秒执行1次，查询创建超过5分钟，并且未成功的退款单
-     */
+     *//*
     //@Scheduled(cron = "0/30 * * * * ?")
     public void refundConfirm() throws Exception {
         log.info("refundConfirm 被执行......");
@@ -77,7 +77,7 @@ public class WxPayTask {
             log.warn("超时未退款的退款单号:{}", refundNo);
             wxPayService.checkRefundStatus(refundNo);
         }
-    }
+    }*/
 
 
 }

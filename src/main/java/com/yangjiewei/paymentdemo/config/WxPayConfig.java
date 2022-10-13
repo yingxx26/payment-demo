@@ -29,7 +29,7 @@ import java.security.PrivateKey;
 @PropertySource("classpath:wxpay.properties") // 读取配置文件
 @ConfigurationProperties(prefix = "wxpay") // 读取wxpay节点
 public class WxPayConfig {
-
+/*
     private String mchId;
 
     private String mchSerialNo;
@@ -46,7 +46,7 @@ public class WxPayConfig {
 
     private String partnerKey;
 
-    /**
+    *//**
      * 获取商户私钥
      * https://github.com/wechatpay-apiv3/wechatpay-apache-httpclient
      * @param filename 私钥文件路径
@@ -55,7 +55,7 @@ public class WxPayConfig {
      *   params: null
      *   modulus: 29196557853371344615989409675856997261494628428355861963950906746529601942277298308632933777539328914504578036539453328803924534856360056526836846208106272284586763165135543674040624325386177794678913931993440095320725327930374188105291484337661926923964738639471498696135487713620903478323379675887571783008968308560543525374453713737215020011994691156294256411677756266727725889445999455904567407650336815977981806781608764967993226396089287868390927942256035766495372056122792641768934311707380459388854196421329304568250723518886141916420729411973764376469218726150169079325093924991584173701865647752277180774557
      *   private exponent: 20162763200722243709279715161200723851534024872041105888680502440471539043678048188815752168052435835353505612947481853126277072845324012364742188725951474393519879062069816609600754022043319358673313786839359526284704939451009435577725365665780263830381618110133826075169690990292025428772111032714277603905998594149013749533334958458079427791088015949208443987127330528857645818049469317133508749713858925696429908213017919090508752232862643059396502847862345155397220935776007996999697563983131754312126730180822916032280507578176235080880200536666606520100029546133905032859326623566559080892337940377264467464545
-     */
+     *//*
     private PrivateKey getPrivateKey(String filename) {
         try {
             return PemUtil.loadPrivateKey(new FileInputStream(filename));
@@ -64,12 +64,12 @@ public class WxPayConfig {
         }
     }
 
-    /**
+    *//**
      * 获取签名验证器
      * https://github.com/wechatpay-apiv3/wechatpay-apache-httpclient 有定时更新平台证书功能
      * 平台证书：平台证书封装了微信的公钥，商户可以使用平台证书中的公钥进行验签。
      * 签名验证器：帮助我们进行验签工作，我们单独将它定义出来，方便后面的开发
-     */
+     *//*
     @Bean
     public ScheduledUpdateCertificatesVerifier getVerifier(){
         // 获取商户私钥
@@ -85,11 +85,11 @@ public class WxPayConfig {
         return verifier;
     }
 
-    /**
+    *//**
      * 获取httpClient对象
      * https://github.com/wechatpay-apiv3/wechatpay-apache-httpclient （定时更新平台证书功能）
      * HttpClient 对象：是建立远程连接的基础，我们通过SDK创建这个对象
-     */
+     *//*
     @Bean(name = "wxPayClient")
     public CloseableHttpClient getWxPayClient(ScheduledUpdateCertificatesVerifier verifier){
         //获取商户私钥
@@ -104,11 +104,11 @@ public class WxPayConfig {
         return httpClient;
     }
 
-    /**
+    *//**
      * 获取无需验证响应签名的httpClient对象
      * @param verifier
      * @return
-     */
+     *//*
     @Bean(name = "wxPayNoSignClient")
     public CloseableHttpClient getWxPayNoSignClient(ScheduledUpdateCertificatesVerifier verifier){
         log.info("初始化wxPayNoSignClient");
@@ -121,7 +121,7 @@ public class WxPayConfig {
         CloseableHttpClient wxPayNoSignClient = builder.build();
         log.info("wxPayNoSignClient初始化完成");
         return wxPayNoSignClient;
-    }
+    }*/
 
 }
 

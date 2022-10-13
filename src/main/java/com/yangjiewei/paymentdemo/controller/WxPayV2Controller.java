@@ -30,7 +30,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @Api(tags = "网站微信支付APIv2")
 @RequestMapping("/api/wx-pay-v2")
 public class WxPayV2Controller {
-
+/*
     @Resource
     private WxPayService wxPayService;
 
@@ -45,12 +45,12 @@ public class WxPayV2Controller {
 
     private final ReentrantLock lock = new ReentrantLock();
 
-    /**
+    *//**
      * native下单 v2
      * @param productId
      * @param request
      * @return
-     */
+     *//*
     @ApiOperation("调用统一下单API，生成支付二维码")
     @PostMapping("/native/{productId}")
     public R createNative(@PathVariable Long productId, HttpServletRequest request) throws Exception {
@@ -60,10 +60,10 @@ public class WxPayV2Controller {
         return R.ok().setData(map);
     }
 
-    /**
+    *//**
      * 支付通知
      * 微信支付通过支付通知接口将用户支付成功消息通知给商户
-     */
+     *//*
     @PostMapping("/native/notify")
     public String wxNotify(HttpServletRequest request) throws Exception {
         log.info("微信native下单回调");
@@ -127,6 +127,6 @@ public class WxPayV2Controller {
         String returnXml = WXPayUtil.mapToXml(returnMap);
         log.info("支付成功，已应答");
         return returnXml;
-    }
+    }*/
 
 }
